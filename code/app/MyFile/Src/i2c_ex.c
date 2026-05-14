@@ -58,8 +58,8 @@ volatile uint8_t fm_version = FIRMWARE_VERSION;
 
 volatile uint32_t jump_bootloader_timeout = 0;
 
-static void I2CRead(uint8_t reg);
-static void I2CWrite(uint8_t reg, uint8_t* data, uint8_t len);
+void I2CRead(uint8_t reg);
+void I2CWrite(uint8_t reg, uint8_t* data, uint8_t len);
 
 /* --- CRC32 --- */
 uint32_t compute_cfg_crc32(uint8_t *p_data, uint16_t length){
@@ -274,7 +274,7 @@ uint8_t I2CGetTxState()
 	return tx_state;
 }
 
-static void I2CRead(uint8_t reg)
+void I2CRead(uint8_t reg)
 {
 	I2CReg_t* list_ptr = reg_list;
 	uint8_t offset = reg & 0x0f;
@@ -323,7 +323,7 @@ static void I2CRead(uint8_t reg)
 	i2c2_set_send_data(&list_ptr->i2c_buff[offset], len);
 }
 
-static void I2CWrite(uint8_t reg, uint8_t* data, uint8_t len)
+void I2CWrite(uint8_t reg, uint8_t* data, uint8_t len)
 {
 	I2CReg_t* list_ptr = reg_list;
 	uint8_t offset = reg & 0x0f;
