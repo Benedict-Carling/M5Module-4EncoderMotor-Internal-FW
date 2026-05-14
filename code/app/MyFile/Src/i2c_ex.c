@@ -369,11 +369,7 @@ static void I2CWrite(uint8_t reg, uint8_t* data, uint8_t len)
 	}
 }
 
-// M2-port: renamed from HAL_I2C_AddrCallback to avoid multiple-definition
-// link error against the M1 register-table slave's identically-named
-// callback in stm32-target-m5/Src/i2c.c. M3 will choose which I2C
-// front-end is active and re-link the chosen one as HAL_I2C_AddrCallback.
-void HAL_I2C_AddrCallback_m5_unused(I2C_HandleTypeDef *hi2c, uint8_t TransferDirection, uint16_t AddrMatchCode) {
+void HAL_I2C_AddrCallback(I2C_HandleTypeDef *hi2c, uint8_t TransferDirection, uint16_t AddrMatchCode) {
 	if (hi2c->Instance == hi2c2.Instance) {
 		hi2c->State = HAL_I2C_STATE_READY;
 		i2c2_addr_req_callback(TransferDirection);
@@ -390,8 +386,7 @@ void HAL_I2C_AddrCallback_m5_unused(I2C_HandleTypeDef *hi2c, uint8_t TransferDir
 }
 
 // read finish will callback
-// M2-port: renamed _m5_unused (see HAL_I2C_AddrCallback_m5_unused note above).
-void HAL_I2C_ListenCpltCallback_m5_unused(I2C_HandleTypeDef *hi2c) {
+void HAL_I2C_ListenCpltCallback(I2C_HandleTypeDef *hi2c) {
 	if (hi2c->Instance == hi2c2.Instance) {
 
     if (tx_state != 1) {
@@ -403,8 +398,7 @@ void HAL_I2C_ListenCpltCallback_m5_unused(I2C_HandleTypeDef *hi2c) {
 }
 
 // write finish will callback
-// M2-port: renamed _m5_unused (see HAL_I2C_AddrCallback_m5_unused note above).
-void HAL_I2C_SlaveRxCpltCallback_m5_unused(I2C_HandleTypeDef *hi2c) {
+void HAL_I2C_SlaveRxCpltCallback(I2C_HandleTypeDef *hi2c) {
 	if (hi2c->Instance == hi2c2.Instance) {
 		i2c2_receive_callback((uint8_t *)&rx_buffer[0], I2C_RECEIVE_BUFFER_LEN);
 		HAL_I2C_EnableListen_IT(&hi2c2);
@@ -412,16 +406,14 @@ void HAL_I2C_SlaveRxCpltCallback_m5_unused(I2C_HandleTypeDef *hi2c) {
 }
 
 // write finish will callback
-// M2-port: renamed _m5_unused (see HAL_I2C_AddrCallback_m5_unused note above).
-void HAL_I2C_SlaveTxCpltCallback_m5_unused(I2C_HandleTypeDef *hi2c) {
+void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef *hi2c) {
 	if (hi2c->Instance == hi2c2.Instance) {
     tx_state = 0;
 		HAL_I2C_EnableListen_IT(&hi2c2);
 	}
 }
 
-// M2-port: renamed _m5_unused (see HAL_I2C_AddrCallback_m5_unused note above).
-void HAL_I2C_ErrorCallback_m5_unused(I2C_HandleTypeDef *hi2c) {
+void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c) {
   if (hi2c->Instance == hi2c2.Instance) {
 		HAL_I2C_EnableListen_IT(&hi2c2);
 		__HAL_I2C_GENERATE_NACK(&hi2c2);
