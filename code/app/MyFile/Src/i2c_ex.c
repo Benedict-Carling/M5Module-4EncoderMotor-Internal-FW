@@ -416,7 +416,10 @@ void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef *hi2c) {
 void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c) {
   if (hi2c->Instance == hi2c2.Instance) {
 		HAL_I2C_EnableListen_IT(&hi2c2);
-		__HAL_I2C_GENERATE_NACK(&hi2c2);
+		// __HAL_I2C_GENERATE_NACK is an F0-only macro; the F1 I2C peripheral
+		// handles NACK generation in HAL_I2C_ER_IRQHandler / the AF flag
+		// before this callback is reached, so re-arming the listener is
+		// sufficient. Acknowledge-failure flag is already cleared by HAL.
 	}
 }
 
