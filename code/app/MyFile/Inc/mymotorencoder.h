@@ -1,6 +1,7 @@
 #ifndef __MYMOTORENCODER_H
 #define __MYMOTORENCODER_H
-#include "stm32f0xx_hal.h"
+#include "stm32f1xx_hal.h"
+#include "main.h"  // M2-port: brings in encoder_ab_mode etc.
 
 #define ENC_M1 0
 #define ENC_M2 1

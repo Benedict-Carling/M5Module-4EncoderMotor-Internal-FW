@@ -1,9 +1,9 @@
 #ifndef __FLASH_H
 #define __FLASH_H
 
-#include "stm32f0xx.h"
+#include "stm32f1xx_hal.h"
 #include <stdbool.h>
-#include "stm32f0xx_hal_flash_ex.h"
+#include "stm32f1xx_hal_flash_ex.h"
 
 //Message head
 #define EEPPROM_PACKAGEHEAD 0xAA55//

@@ -1,6 +1,7 @@
 #ifndef __MYMOTORBDC_H
 #define __MYMOTORBDC_H
-#include "stm32f0xx_hal.h"
+#include "stm32f1xx_hal.h"
+#include "main.h"  // M2-port: brings in soft_start_stop_switch, micros(), etc.
 
 #define MPWM_HIGHFREQUENCY 1
 
